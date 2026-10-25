@@ -1,0 +1,60 @@
+---
+interface Props {
+  title: string;
+  description?: string;
+  canonicalURL?: string;
+  ogImage?: string;
+}
+
+const {
+  title,
+  description = "VR Interiors - Interior design services and premium home interior materials including Polygranite sheets, PVC, WPC, WPVC, wallpapers and more. Serving Vizag and beyond.",
+  canonicalURL,
+  ogImage = "/og-default.jpg",
+} = Astro.props;
+
+const siteURL = "https://vrinteriors.in";
+const pageURL = canonicalURL ? `${siteURL}${canonicalURL}` : Astro.url;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | VR Interiors</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={pageURL} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={pageURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={`${siteURL}${ogImage}`} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={pageURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={`${siteURL}${ogImage}`} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Preconnect for fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="flex flex-col min-h-screen">
+    <slot name="header" />
+    <main class="flex-grow">
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>

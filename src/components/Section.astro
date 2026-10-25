@@ -1,0 +1,54 @@
+---
+interface Props {
+  children: any;
+  id?: string;
+  class?: string;
+  background?: 'default' | 'muted' | 'dark' | 'primary' | 'gradient';
+  padding?: 'none' | 'sm' | 'md' | 'lg' | 'xl';
+  container?: boolean;
+  narrow?: boolean;
+}
+
+const {
+  children,
+  id,
+  class: className = '',
+  background = 'default',
+  padding = 'md',
+  container = true,
+  narrow = false,
+} = Astro.props;
+
+const backgroundClasses = {
+  default: 'bg-white',
+  muted: 'bg-neutral-50',
+  dark: 'bg-neutral-900 text-neutral-100',
+  primary: 'bg-primary-600 text-white',
+  gradient: 'bg-gradient-to-br from-primary-50 via-white to-secondary-50',
+};
+
+const paddingClasses = {
+  none: '',
+  sm: 'py-8 md:py-12',
+  md: 'py-16 md:py-24',
+  lg: 'py-20 md:py-28 lg:py-36',
+  xl: 'py-24 md:py-32 lg:py-48',
+};
+
+const containerClasses = container
+  ? narrow
+    ? 'max-w-3xl mx-auto px-4 sm:px-6 lg:px-8'
+    : 'container'
+  : 'px-4 sm:px-6 lg:px-8';
+
+const allClasses = `${backgroundClasses[background]} ${paddingClasses[padding]} ${className}`.trim();
+---
+
+<section
+  {id && `id="${id}"`}
+  class={allClasses}
+>
+  <div class={containerClasses}>
+    {children}
+  </div>
+</section>

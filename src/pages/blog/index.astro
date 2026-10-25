@@ -1,0 +1,145 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import Section from '@/components/Section.astro';
+import Card from '@/components/Card.astro';
+import Button from '@/components/Button.astro';
+---
+
+<Layout title="Blog - VR Interiors" description="Expert insights on interior design trends, material guides, project showcases, and tips for homeowners and builders. From the VR Interiors team in Vizag.">
+  <Nav currentPage="/blog" slot="header" />
+
+  <!-- Hero -->
+  <Section id="blog-hero" background="gradient" padding="xl" narrow>
+    <div class="text-center">
+      <span class="badge-primary mb-6">Insights & Inspiration</span>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">Design Ideas, Material Guides & Project Stories</h1>
+      <p class="text-xl md:text-2xl text-neutral-600 max-w-3xl mx-auto">Expert insights from our 15+ member team — trends, technical guides, and real project learnings.</p>
+    </div>
+  </Section>
+
+  <!-- Featured Post -->
+  <Section id="featured-post" background="default" padding="lg">
+    <div class="section-header">
+      <h2 class="section-title">Latest Feature</h2>
+    </div>
+    <Card variant="horizontal" padding="none" class="group" href="/blog/polygranite-vs-quartz">
+      <div class="relative w-full md:w-1/2 min-h-[300px]">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center">
+          <svg class="w-32 h-32 text-white/20" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+        </div>
+      </div>
+      <div class="p-6 md:p-8 flex flex-col justify-center">
+        <div class="flex items-center gap-3 mb-3">
+          <span class="badge-primary">Materials Guide</span>
+          <time class="text-sm text-neutral-500" datetime="2024-12-15">Dec 15, 2024</time>
+        </div>
+        <h2 class="text-2xl md:text-3xl font-bold text-neutral-900 mb-3 group-hover:text-primary-600 transition-colors">Polygranite vs Quartz vs Granite: Complete Comparison for Indian Kitchens</h2>
+        <p class="text-neutral-600 mb-6 flex-1">Choosing the right countertop material impacts durability, maintenance, and budget. Our experts break down the pros, cons, and real-world performance of each option for Indian cooking conditions.</p>
+        <Button variant="primary" class="w-full md:w-auto">Read Article</Button>
+      </div>
+    </Card>
+  </Section>
+
+  <!-- All Posts -->
+  <Section id="all-posts" background="muted" padding="lg">
+    <div class="section-header">
+      <h2 class="section-title">All Articles</h2>
+      <p class="section-subtitle">Browse by category or scroll through our latest insights</p>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="flex flex-wrap gap-2 justify-center mb-10" role="group" aria-label="Filter by category">
+      {['All', 'Design Trends', 'Materials Guide', 'Project Showcase', 'Tips & Guides', 'Budget Planning'].map(cat => (
+        <button class={`px-4 py-2 rounded-full text-sm font-medium transition-all ${cat === 'All' ? 'bg-primary-600 text-white' : 'bg-white text-neutral-600 hover:bg-primary-50 hover:text-primary-700 border border-neutral-200'}`} data-category={cat.toLowerCase().replace(' & ', '-').replace(' ', '-')}>
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    <!-- Posts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="posts-grid">
+      {[
+        { slug: 'pvc-wpc-difference', title: 'PVC vs WPC vs WPVC: Which Panel Material Is Right for Your Project?', category: 'Materials Guide', date: '2024-12-10', readTime: '8 min', image: '/blog/pvc-wpc.jpg', featured: false },
+        { slug: 'modular-kitchen-design-tips', title: '10 Modular Kitchen Design Mistakes to Avoid (And How to Fix Them)', category: 'Tips & Guides', date: '2024-12-05', readTime: '6 min', image: '/blog/modular-kitchen.jpg', featured: false },
+        { slug: 'office-interior-trends-2024', title: 'Office Interior Trends 2024: What Modern Workspaces Actually Need', category: 'Design Trends', date: '2024-11-28', readTime: '7 min', image: '/blog/office-trends.jpg', featured: false },
+        { slug: 'bathroom-renovation-checklist', title: 'Complete Bathroom Renovation Checklist: From Demo to Final Reveal', category: 'Tips & Guides', date: '2024-11-20', readTime: '9 min', image: '/blog/bathroom-reno.jpg', featured: false },
+        { slug: 'commercial-showroom-case-study', title: 'Case Study: 5,000 sqft Commercial Showroom Fit-out in 45 Days', category: 'Project Showcase', date: '2024-11-12', readTime: '5 min', image: '/blog/showroom-case.jpg', featured: false },
+        { slug: 'budget-interior-design-tips', title: 'How to Design a Beautiful Home on a Budget: Expert Tips', category: 'Budget Planning', date: '2024-11-05', readTime: '7 min', image: '/blog/budget-tips.jpg', featured: false },
+        { slug: 'wallpaper-trends-2024', title: 'Wallpaper Trends 2024: From Bold Patterns to Subtle Textures', category: 'Design Trends', date: '2024-10-28', readTime: '5 min', image: '/blog/wallpaper-trends.jpg', featured: false },
+        { slug: 'material-sourcing-guide', title: 'Contractor\'s Guide to Sourcing Quality Interior Materials in Vizag', category: 'Materials Guide', date: '2024-10-20', readTime: '6 min', image: '/blog/sourcing-guide.jpg', featured: false },
+        { slug: 'home-office-design-ideas', title: 'Home Office Design Ideas That Boost Productivity & Style', category: 'Tips & Guides', date: '2024-10-12', readTime: '6 min', image: '/blog/home-office.jpg', featured: false },
+      ].map(post => (
+        <Card variant="image-top" padding="none" href={`/blog/${post.slug}`} image={{ src: post.image, alt: post.title }} class="h-full group">
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="badge-primary">{post.category}</span>
+              <time class="text-sm text-neutral-500" datetime={post.date}>{new Date(post.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
+            </div>
+            <h3 class="text-lg font-semibold text-neutral-900 mb-2 group-hover:text-primary-600 transition-colors line-clamp-2">{post.title}</h3>
+            <p class="text-sm text-neutral-500 flex items-center gap-1 mt-auto">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              {post.readTime} read
+            </p>
+          </div>
+        </Card>
+      ))}
+    </div>
+
+    <!-- Load More -->
+    <div class="text-center mt-12">
+      <Button variant="secondary" class="w-full sm:w-auto" id="load-more">Load More Articles</Button>
+    </div>
+  </Section>
+
+  <!-- Newsletter -->
+  <Section id="blog-newsletter" background="primary" padding="lg" narrow>
+    <div class="text-center text-white">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Don't Miss an Article</h2>
+      <p class="text-primary-100 mb-8 max-w-2xl mx-auto">Get design tips, material guides, and project inspiration delivered to your inbox — once a month, no spam.</p>
+      <form class="max-w-md mx-auto flex flex-col sm:flex-row gap-4" action="https://formspree.io/f/your-form-id" method="POST">
+        <input type="email" name="email" placeholder="Your email address" class="input-field flex-1 bg-white/10 border-white/20 text-white placeholder-white/60 focus:border-white focus:ring-white" required />
+        <Button type="submit" variant="secondary" class="w-full sm:w-auto border-white text-white hover:bg-white/10">Subscribe</Button>
+      </form>
+    </div>
+  </Section>
+
+  <Footer slot="footer" />
+</Layout>
+
+<script>
+  // Category filter
+  const filterButtons = document.querySelectorAll('[data-category]');
+  const posts = document.querySelectorAll('#posts-grid > *');
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const category = btn.dataset.category;
+      filterButtons.forEach(b => {
+        b.classList.remove('bg-primary-600', 'text-white');
+        b.classList.add('bg-white', 'text-neutral-600', 'hover:bg-primary-50', 'hover:text-primary-700', 'border', 'border-neutral-200');
+      });
+      btn.classList.add('bg-primary-600', 'text-white');
+      btn.classList.remove('bg-white', 'text-neutral-600', 'hover:bg-primary-50', 'hover:text-primary-700', 'border', 'border-neutral-200');
+
+      posts.forEach(post => {
+        if (category === 'all') {
+          post.style.display = '';
+        } else {
+          const badge = post.querySelector('.badge-primary');
+          if (badge && badge.textContent.toLowerCase().replace(' & ', '-').replace(' ', '-') === category) {
+            post.style.display = '';
+          } else {
+            post.style.display = 'none';
+          }
+        }
+      });
+    });
+  });
+
+  // Load more (placeholder)
+  document.getElementById('load-more')?.addEventListener('click', () => {
+    alert('Load more functionality would fetch additional posts from a CMS or static files.');
+  });
+</script>

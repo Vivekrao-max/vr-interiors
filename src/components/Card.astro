@@ -1,0 +1,111 @@
+---
+interface Props {
+  children: any;
+  variant?: 'default' | 'image-top' | 'horizontal' | 'material';
+  class?: string;
+  hover?: boolean;
+  padding?: 'none' | 'sm' | 'md' | 'lg';
+  href?: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
+  badge?: string;
+  badgeVariant?: 'primary' | 'secondary';
+}
+
+const {
+  children,
+  variant = 'default',
+  class: className = '',
+  hover = true,
+  padding = 'md',
+  href,
+  image,
+  badge,
+  badgeVariant = 'primary',
+} = Astro.props;
+
+const paddingClasses = {
+  none: '',
+  sm: 'p-4',
+  md: 'p-6',
+  lg: 'p-8',
+};
+
+const hoverClass = hover ? 'transition-all duration-300 hover:shadow-lg hover:-translate-y-1' : '';
+const linkWrapper = href ? 'group' : '';
+
+const baseClasses = `card ${paddingClasses[padding]} ${hoverClass} ${linkWrapper} ${className}`.trim();
+
+const isLink = !!href;
+const Tag = isLink ? 'a' : 'div';
+---
+
+<{Tag}
+  href={isLink ? href : undefined}
+  class={baseClasses}
+  {href && 'tabindex="0"'}
+  {href && 'role="link"'}
+  {href && `aria-label="${typeof children === 'string' ? children : 'View details'}"`}
+>
+  {image && (
+    <div class={`relative overflow-hidden ${padding === 'none' ? '-m-6 mb-6' : '-mx-6 -mt-6 mb-6'} rounded-t-lg`}>
+      <img
+        src={image.src}
+        alt={image.alt}
+        loading="lazy"
+        class="w-full h-48 md:h-56 object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+      {badge && (
+        <span class={`absolute top-3 left-3 badge ${badgeVariant === 'primary' ? 'badge-primary' : 'badge-secondary'}`}>
+          {badge}
+        </span>
+      )}
+    </div>
+  )}
+
+  <div class={padding === 'none' ? '' : 'flex flex-col h-full'}>
+    <slot>{children}</slot>
+  </div>
+
+  {isLink && (
+    <span class="absolute inset-0 -z-10" aria-hidden="true" />
+  )}
+</{Tag}>
+
+<style>
+  /* Horizontal card variant */
+  .card.horizontal {
+    @apply flex flex-col md:flex-row;
+  }
+
+  .card.horizontal > div:first-child {
+    @apply w-full md:w-1/2 md:h-full md:mb-0;
+  }
+
+  .card.horizontal img {
+    @apply h-full min-h-[200px];
+  }
+
+  .card.horizontal > div:last-child {
+    @apply flex-1 flex flex-col justify-center;
+  }
+
+  /* Material card variant */
+  .card.material {
+    @apply grid grid-cols-1 md:grid-cols-3 gap-0;
+  }
+
+  .card.material > div:first-child {
+    @apply md:col-span-1 relative;
+  }
+
+  .card.material > div:first-child img {
+    @apply h-full min-h-[250px] w-full object-cover;
+  }
+
+  .card.material > div:last-child {
+    @apply md:col-span-2 p-6 flex flex-col justify-center;
+  }
+</style>

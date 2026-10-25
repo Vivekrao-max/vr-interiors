@@ -1,0 +1,70 @@
+---
+interface Props {
+  children: any;
+  variant?: 'primary' | 'secondary' | 'accent' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  disabled?: boolean;
+  fullWidth?: boolean;
+  class?: string;
+  onClick?: () => void;
+  'aria-label'?: string;
+}
+
+const {
+  children,
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  disabled = false,
+  fullWidth = false,
+  class: className = '',
+  onClick,
+  'aria-label': ariaLabel,
+  ...rest
+} = Astro.props;
+
+const variantClasses = {
+  primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 shadow-sm hover:shadow-md',
+  secondary: 'border-2 border-primary-600 text-primary-600 bg-transparent hover:bg-primary-50 focus:ring-primary-500',
+  accent: 'bg-secondary-600 text-white hover:bg-secondary-700 focus:ring-secondary-500 shadow-sm hover:shadow-md',
+  ghost: 'text-neutral-600 hover:bg-neutral-100 hover:text-primary-700 focus:ring-neutral-500',
+};
+
+const sizeClasses = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg',
+};
+
+const baseClasses = 'inline-flex items-center justify-center font-medium rounded-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed';
+
+const widthClass = fullWidth ? 'w-full' : '';
+
+const allClasses = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${widthClass} ${className}`.trim();
+
+const isLink = !!href;
+const Tag = isLink ? 'a' : 'button';
+---
+
+<{Tag}
+  {...rest}
+  href={isLink ? href : undefined}
+  type={isLink ? undefined : type}
+  class={allClasses}
+  disabled={disabled && !isLink}
+  aria-disabled={disabled}
+  aria-label={ariaLabel}
+  on:click={onClick}
+>
+  {children}
+</{Tag}>
+
+<style>
+  /* Ensure consistent focus styles across browsers */
+  :host(:focus-visible) {
+    outline: none;
+  }
+</style>

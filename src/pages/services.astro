@@ -1,0 +1,169 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import Section from '@/components/Section.astro';
+import Card from '@/components/Card.astro';
+import Button from '@/components/Button.astro';
+---
+
+<Layout title="Services & Materials - VR Interiors" description="Complete interior solutions: Interior design services, Polygranite sheets, PVC panels, WPC boards, WPVC products, and designer wallpapers. Serving residential and commercial clients in Vizag.">
+  <Nav currentPage="/services" slot="header" />
+
+  <!-- Hero -->
+  <Section id="services-hero" background="gradient" padding="xl" narrow>
+    <div class="text-center">
+      <span class="badge-primary mb-6">Services & Materials</span>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-neutral-900 mb-6">Complete Interior Solutions Under One Roof</h1>
+      <p class="text-xl md:text-2xl text-neutral-600 max-w-3xl mx-auto">From concept to completion — expert design services backed by premium materials stocked in-house.</p>
+    </div>
+  </Section>
+
+  <!-- Interior Design Services -->
+  <Section id="design-services" background="default" padding="lg">
+    <div class="section-header">
+      <h2 class="section-title">Interior Design Services</h2>
+      <p class="section-subtitle">End-to-end design for homes, offices, and commercial spaces</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[
+        { id: 'residential', title: 'Residential Interior Design', desc: 'Complete home design — space planning, 3D visualization, material selection, modular kitchens, wardrobes, false ceilings, lighting design, and turnkey execution.', icon: 'home', features: ['2BHK/3BHK/Villa Design', 'Modular Kitchen & Wardrobes', 'False Ceiling & Lighting', 'Furniture Design & Procurement'] },
+        { id: 'commercial', title: 'Commercial Fit-outs', desc: 'Office interiors, retail showrooms, restaurants, clinics, and coworking spaces — optimized for workflow, brand identity, and customer experience.', icon: 'building', features: ['Office Space Planning', 'Retail & Showroom Design', 'Restaurant & Cafe Interiors', 'Healthcare & Clinic Design'] },
+        { id: 'renovation', title: 'Renovation & Remodeling', desc: 'Structural and aesthetic renovations — bathroom remodels, kitchen upgrades, flooring replacement, wall treatments, and full-home makeovers.', icon: 'hammer', features: ['Bathroom Renovation', 'Kitchen Remodeling', 'Flooring & Wall Finishes', 'Structural Modifications'] },
+      ].map(service => (
+        <Card variant="default" padding="lg" class="flex flex-col h-full group" id={service.id}>
+          <div class="w-14 h-14 rounded-xl bg-primary-100 flex items-center justify-center mb-4 group-hover:bg-primary-600 transition-colors duration-300">
+            {service.icon === 'home' && <svg class="w-7 h-7 text-primary-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 22V12h6v10" /></svg>}
+            {service.icon === 'building' && <svg class="w-7 h-7 text-primary-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>}
+            {service.icon === 'hammer' && <svg class="w-7 h-7 text-primary-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>}
+          </div>
+          <h3 class="text-xl font-semibold text-neutral-900 mb-2">{service.title}</h3>
+          <p class="text-neutral-600 mb-4 flex-1">{service.desc}</p>
+          <ul class="space-y-2 mb-6">
+            {service.features.map(feature => (
+              <li class="flex items-center gap-2 text-sm text-neutral-700">
+                <svg class="w-4 h-4 text-primary-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                {feature}
+              </li>
+            ))}
+          </ul>
+          <Button variant="secondary" href="/contact" class="w-full">Get Quote for {service.title}</Button>
+        </Card>
+      ))}
+    </div>
+  </Section>
+
+  <!-- Materials Supply -->
+  <Section id="materials" background="muted" padding="lg">
+    <div class="section-header">
+      <h2 class="section-title">Premium Materials Supply</h2>
+      <p class="section-subtitle">Direct from manufacturers — quality guaranteed, competitive pricing</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[
+        { name: 'Polygranite Sheets', desc: '100% polyester-based solid surface — non-porous, stain-resistant, seamless joints, 50+ colors. Ideal for kitchen countertops, vanity tops, wall cladding, reception counters.', specs: ['Thickness: 6mm, 12mm', 'Sheet Size: 3680 x 760mm', 'Colors: 50+ solids & patterns', 'Certification: NSF, CE, Greenguard'], badge: 'Best Seller', badgeVariant: 'secondary' as const, image: '/materials/polygranite.jpg' },
+        { name: 'PVC Panels', desc: 'Waterproof, termite-proof, fire-retardant wall & ceiling panels. Zero maintenance, easy installation. Perfect for bathrooms, kitchens, basements, and exterior facades.', specs: ['Thickness: 5mm - 10mm', 'Width: 250mm, 300mm', 'Length: 2.4m, 2.7m, 3m', 'Finish: Matte, Gloss, Woodgrain'], badge: 'Waterproof', badgeVariant: 'primary' as const, image: '/materials/pvc.jpg' },
+        { name: 'WPC Boards', desc: 'Wood-plastic composite — natural wood look with plastic durability. Termite-proof, water-resistant, eco-friendly. For furniture, partitions, wall paneling, outdoor decking.', specs: ['Density: 600-800 kg/m³', 'Thickness: 6mm - 25mm', 'Sizes: 8x4 ft, 6x4 ft', 'Finish: Wood texture, Solid colors'], badge: 'Eco-Friendly', badgeVariant: 'primary' as const, image: '/materials/wpc.jpg' },
+        { name: 'WPVC Products', desc: 'Wood-plastic PVC hybrid — superior strength, weather resistance. Door frames, window profiles, louvers, pergolas, and outdoor furniture. Zero warping, zero rotting.', specs: ['Profiles: Door frames, windows, louvers', 'Colors: White, teak, mahogany, walnut', 'UV Stabilized', '10-year warranty'], badge: 'Outdoor Ready', badgeVariant: 'secondary' as const, image: '/materials/wpvc.jpg' },
+        { name: 'Designer Wallpapers', desc: '200+ patterns — textures, geometrics, florals, 3D effects, metallic finishes. Commercial-grade durability. Custom printing available for branding.', specs: ['Roll Size: 10m x 0.53m', 'Types: Vinyl, Non-woven, Textile', 'Fire Rating: Class A available', 'Custom: Minimum 50 rolls'], badge: 'Custom Print', badgeVariant: 'secondary' as const, image: '/materials/wallpaper.jpg' },
+        { name: 'Complete Interior Hardware', desc: 'Modular kitchen accessories, wardrobe systems, hinges, drawer channels, handles, profiles, lighting profiles — all compatible with our materials.', specs: ['Brands: Hettich, Blum, Hafele', 'Soft-close systems', 'LED profile lighting', 'Aluminum profiles'], badge: 'In Stock', badgeVariant: 'primary' as const, image: '/materials/hardware.jpg' },
+      ].map(material => (
+        <Card variant="image-top" padding="none" image={{ src: material.image, alt: material.name }} badge={material.badge} badgeVariant={material.badgeVariant} class="h-full">
+          <div class="p-6 flex flex-col flex-1">
+            <h3 class="text-xl font-semibold text-neutral-900 mb-2">{material.name}</h3>
+            <p class="text-neutral-600 text-sm mb-4 flex-1">{material.desc}</p>
+            <ul class="space-y-1.5 mb-4 text-sm text-neutral-700">
+              {material.specs.map(spec => (
+                <li class="flex items-center gap-2">
+                  <svg class="w-3.5 h-3.5 text-primary-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" /></svg>
+                  {spec}
+                </li>
+              ))}
+            </ul>
+            <Button variant="secondary" href="/contact" class="w-full mt-auto">Enquire & Get Samples</Button>
+          </div>
+        </Card>
+      ))}
+    </div>
+    <div class="text-center mt-12">
+      <Button variant="primary" href="/contact" class="w-full sm:w-auto text-lg px-8 py-4">Request Material Catalog & Pricing</Button>
+    </div>
+  </Section>
+
+  <!-- Process -->
+  <Section id="process" background="default" padding="lg">
+    <div class="section-header">
+      <h2 class="section-title">Our Design-to-Delivery Process</h2>
+      <p class="section-subtitle">Transparent, collaborative, and on schedule — every time</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {[
+        { step: '01', title: 'Consultation', desc: 'Free site visit & requirement gathering. Understand your vision, budget, and timeline.' },
+        { step: '02', title: 'Design & 3D', desc: 'Concept development, 3D walkthroughs, material boards, and detailed BOQ preparation.' },
+        { step: '03', title: 'Approval & Contract', desc: 'Final design sign-off, fixed pricing, timeline lock-in, and contract execution.' },
+        { step: '04', title: 'Execution & Handover', desc: 'In-house team executes with weekly updates. Quality checks at every stage. Final walkthrough & warranty docs.' },
+      ].map((item, i) => (
+        <div class="relative pl-14 md:pl-16">
+          <span class="absolute left-0 top-0 text-4xl md:text-5xl font-bold text-primary-100">{item.step}</span>
+          <h3 class="text-xl font-semibold text-neutral-900 mb-2">{item.title}</h3>
+          <p class="text-neutral-600">{item.desc}</p>
+          {i < 3 && (
+            <div class="absolute right-0 top-8 hidden md:block w-8 h-0.5 bg-primary-200" aria-hidden="true" />
+          )}
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <!-- FAQ -->
+  <Section id="faq" background="muted" padding="lg" narrow>
+    <div class="section-header">
+      <h2 class="section-title">Frequently Asked Questions</h2>
+    </div>
+    <dl class="space-y-4 max-w-2xl mx-auto">
+      {[
+        { q: 'Do you provide free design consultation?', a: 'Yes, we offer a free initial consultation and site visit within Vizag city limits. For outstation projects, a nominal fee applies which is adjusted against the project cost.' },
+        { q: 'Can I buy materials only without design services?', a: 'Absolutely. We supply Polygranite, PVC, WPC, WPVC, wallpapers, and hardware to contractors, builders, and DIY customers. Bulk discounts available.' },
+        { q: 'What is the typical timeline for a 3BHK interior project?', a: 'Design phase: 2-3 weeks. Execution: 45-60 days depending on scope. We provide a detailed timeline in the contract with weekly milestones.' },
+        { q: 'Do you offer EMI or financing options?', a: 'Yes, we partner with leading NBFCs for 0% EMI options up to 12 months on projects above ₹3 lakhs. Ask our team during consultation.' },
+        { q: 'Is there a warranty on materials and workmanship?', a: 'Materials carry manufacturer warranties (1-10 years depending on product). Workmanship warranty: 2 years on all executed projects.' },
+        { q: 'Can I see material samples before deciding?', a: 'Yes! We provide free sample kits for all material categories. Visit our Vizag showroom or request doorstep delivery.' },
+      ].map(faq => (
+        <div class="border border-neutral-200 rounded-lg overflow-hidden bg-white">
+          <dt class="p-6 bg-neutral-50 font-medium text-neutral-900 cursor-pointer flex items-center justify-between" aria-expanded="false">
+            {faq.q}
+            <svg class="w-5 h-5 text-neutral-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </dt>
+          <dd class="p-6 text-neutral-600 hidden">{faq.a}</dd>
+        </div>
+      ))}
+    </dl>
+  </Section>
+
+  <!-- CTA -->
+  <Section id="services-cta" background="primary" padding="lg" narrow>
+    <div class="text-center text-white">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Ready to Start Your Project?</h2>
+      <p class="text-primary-100 mb-8 max-w-2xl mx-auto">Get a free consultation, material samples, and a detailed quote — no obligation.</p>
+      <Button variant="secondary" href="/contact" class="w-full sm:w-auto text-lg px-8 py-4 border-white text-white hover:bg-white/10">Get My Free Quote</Button>
+    </div>
+  </Section>
+
+  <Footer slot="footer" />
+</Layout>
+
+<script>
+  // Simple FAQ accordion
+  document.querySelectorAll('#faq dt').forEach(dt => {
+    dt.addEventListener('click', () => {
+      const dd = dt.nextElementSibling;
+      const isOpen = !dd.classList.contains('hidden');
+      document.querySelectorAll('#faq dd').forEach(d => d.classList.add('hidden'));
+      document.querySelectorAll('#faq dt').forEach(d => d.setAttribute('aria-expanded', 'false'));
+      if (!isOpen) {
+        dd.classList.remove('hidden');
+        dt.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
+</script>

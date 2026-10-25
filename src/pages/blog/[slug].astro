@@ -1,0 +1,226 @@
+---
+import Layout from '@/layouts/Layout.astro';
+import Nav from '@/components/Nav.astro';
+import Footer from '@/components/Footer.astro';
+import Section from '@/components/Section.astro';
+import Button from '@/components/Button.astro';
+import { getCollection } from 'astro:content';
+
+// Sample post data - replace with Astro content collections when ready
+const samplePosts: Record<string, any> = {
+  'polygranite-vs-quartz': {
+    title: 'Polygranite vs Quartz vs Granite: Complete Comparison for Indian Kitchens',
+    excerpt: 'Choosing the right countertop material impacts durability, maintenance, and budget. Our experts break down the pros, cons, and real-world performance of each option for Indian cooking conditions.',
+    category: 'Materials Guide',
+    date: '2024-12-15',
+    readTime: '8 min',
+    author: 'Vivek Rao',
+    authorRole: 'Founder, VR Interiors',
+    image: '/blog/polygranite-vs-quartz.jpg',
+    content: `
+      <h2>Introduction</h2>
+      <p>When designing a kitchen in India, the countertop decision is one of the most critical — and expensive — choices you'll make. It needs to withstand daily cooking with turmeric, oil, pressure cookers, hot pans, and the occasional dropped utensil.</p>
+
+      <h2>Quick Comparison</h2>
+      <table class="w-full border-collapse mb-8">
+        <thead>
+          <tr class="bg-primary-50">
+            <th class="p-3 text-left font-semibold">Factor</th>
+            <th class="p-3 text-left font-semibold">Polygranite</th>
+            <th class="p-3 text-left font-semibold">Quartz</th>
+            <th class="p-3 text-left font-semibold">Granite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-neutral-200">
+            <td class="p-3 font-medium">Stain Resistance</td>
+            <td class="p-3">Excellent</td>
+            <td class="p-3">Excellent</td>
+            <td class="p-3">Good (needs sealing)</td>
+          </tr>
+          <tr class="border-b border-neutral-200 bg-neutral-50">
+            <td class="p-3 font-medium">Heat Resistance</td>
+            <td class="p-3">Good (up to 180°C)</td>
+            <td class="p-3">Moderate (up to 150°C)</td>
+            <td class="p-3">Excellent</td>
+          </tr>
+          <tr class="border-b border-neutral-200">
+            <td class="p-3 font-medium">Scratch Resistance</td>
+            <td class="p-3">Very Good</td>
+            <td class="p-3">Very Good</td>
+            <td class="p-3">Excellent</td>
+          </tr>
+          <tr class="border-b border-neutral-200 bg-neutral-50">
+            <td class="p-3 font-medium">Maintenance</td>
+            <td class="p-3">Low</td>
+            <td class="p-3">Low</td>
+            <td class="p-3">Medium (annual sealing)</td>
+          </tr>
+          <tr class="border-b border-neutral-200">
+            <td class="p-3 font-medium">Seam Visibility</td>
+            <td class="p-3">Nearly Invisible</td>
+            <td class="p-3">Visible</td>
+            <td class="p-3">Visible</td>
+          </tr>
+          <tr class="bg-neutral-50">
+            <td class="p-3 font-medium">Price Range (per sq ft)</td>
+            <td class="p-3">₹400-800</td>
+            <td class="p-3">₹350-1200</td>
+            <td class="p-3">₹200-2000+</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2>Deep Dive: Polygranite</h2>
+      <p><strong>What it is:</strong> 100% acrylic-modified polyester resin with aluminum trihydrate filler. Non-porous, homogeneous, and thermoformable.</p>
+      <p><strong>Why it works for Indian kitchens:</strong> The non-porous surface means turmeric, oil, and food colors don't penetrate. Seamless joints prevent bacterial buildup. Minor scratches can be buffed out.</p>
+      <p><strong>Watch out:</strong> Not as heat-resistant as granite. Use trivets for hot pans. Can be damaged by harsh chemicals (avoid drain cleaners, oven cleaners).</p>
+
+      <h2>Deep Dive: Quartz</h2>
+      <p><strong>What it is:</strong> 90-95% natural quartz crystals bound with polymer resins. Engineered for consistency.</p>
+      <p><strong>Why it works:</strong> Extremely hard and scratch-resistant. Consistent patterns (unlike natural stone). Wide color range including marble-look options.</p>
+      <p><strong>Watch out:</strong> Resin binders can discolor under direct sunlight. Less heat-resistant than granite. Seams are more visible than Polygranite.</p>
+
+      <h2>Deep Dive: Granite</h2>
+      <p><strong>What it is:</strong> 100% natural igneous rock. Every slab is unique.</p>
+    <p><strong>Why it works:</strong> Unbeatable heat resistance. Timeless appeal. Adds resale value. Each piece is one-of-a-kind.</p>
+    <p><strong>Watch out:</strong> Porous — requires annual sealing. Can chip on edges. Natural fissures may exist. Seams are visible. Price varies wildly.</p>
+
+    <h2>Our Recommendation</h2>
+    <p>For most Indian homes, <strong>Polygranite offers the best balance</strong> of stain resistance, seamless aesthetics, repairability, and value. It's what we specify in 70% of our kitchen projects.</p>
+    <p>Choose Quartz if you want a specific marble-look pattern. Choose Granite if you prioritize heat resistance and natural stone character — and don't mind the maintenance.</p>
+
+    <h2>Need Samples?</h2>
+    <p>Visit our Vizag showroom or <a href="/contact" class="text-primary-600 hover:underline font-medium">request a sample kit</a> — we'll send you all three materials to test in your own kitchen lighting.</p>
+    `
+  },
+  'pvc-wpc-difference': {
+    title: 'PVC vs WPC vs WPVC: Which Panel Material Is Right for Your Project?',
+    excerpt: 'Confused between PVC, WPC, and WPVC panels? Our material experts explain the differences, ideal use cases, and what to specify for bathrooms, exteriors, and furniture.',
+    category: 'Materials Guide',
+    date: '2024-12-10',
+    readTime: '8 min',
+    author: 'Govinda Rao',
+    authorRole: 'Managing Director, VR Interiors',
+    image: '/blog/pvc-wpc.jpg',
+    content: '<p>Content coming soon...</p>'
+  }
+};
+
+const { slug } = Astro.params;
+const post = samplePosts[slug as string];
+
+if (!post) {
+  return Astro.redirect('/blog');
+}
+
+const canonicalURL = `/blog/${slug}`;
+const ogImage = post.image;
+---
+
+<Layout title={`${post.title} | VR Interiors Blog`} description={post.excerpt} canonicalURL={canonicalURL} ogImage={ogImage}>
+  <Nav currentPage="/blog" slot="header" />
+
+  <!-- Article Header -->
+  <Section id="article-header" background="gradient" padding="xl" narrow>
+    <article>
+      <div class="flex items-center gap-3 mb-4">
+        <span class="badge-primary">{post.category}</span>
+        <time class="text-sm text-neutral-500" datetime={post.date}>
+          {new Date(post.date).toLocaleDateString('en-IN', { month: 'long', day: 'numeric', year: 'numeric' })}
+        </time>
+        <span class="text-sm text-neutral-500 ml-auto">{post.readTime} read</span>
+      </div>
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-900 mb-4">{post.title}</h1>
+      <p class="text-xl text-neutral-600 mb-6 max-w-3xl">{post.excerpt}</p>
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-full bg-primary-100 flex items-center justify-center">
+          <span class="text-primary-700 font-bold text-lg">{post.author.charAt(0)}</span>
+        </div>
+        <div>
+          <p class="font-semibold text-neutral-900">{post.author}</p>
+          <p class="text-sm text-neutral-500">{post.authorRole}</p>
+        </div>
+      </div>
+    </article>
+  </Section>
+
+  <!-- Featured Image -->
+  <Section id="article-image" background="default" padding="none" class="max-w-4xl mx-auto -mt-8 mb-12 px-4">
+    <div class="rounded-2xl overflow-hidden shadow-xl aspect-video bg-neutral-100">
+      <svg class="w-full h-full text-neutral-300" viewBox="0 0 800 450" aria-hidden="true">
+        <rect width="800" height="450" fill="#f0f0f0"/>
+        <text x="400" y="225" text-anchor="middle" font-family="Inter, sans-serif" font-size="18" fill="#999">{post.title}</text>
+      </svg>
+    </div>
+  </Section>
+
+  <!-- Article Content -->
+  <Section id="article-content" background="default" padding="lg" narrow>
+    <article class="prose prose-neutral max-w-none">
+      <div class="article-content" set:html={post.content} />
+    </article>
+
+    <!-- Author Bio -->
+    <div class="mt-16 pt-8 border-t border-neutral-200 flex gap-4">
+      <div class="w-16 h-16 rounded-full bg-primary-100 flex items-center justify-center flex-shrink-0">
+        <span class="text-primary-700 font-bold text-2xl">{post.author.charAt(0)}</span>
+      </div>
+      <div>
+        <h3 class="font-semibold text-neutral-900">Written by {post.author}</h3>
+        <p class="text-neutral-600 text-sm">{post.authorRole}</p>
+      </div>
+    </div>
+
+    <!-- Share -->
+    <div class="mt-12 pt-8 border-t border-neutral-200">
+      <p class="font-medium text-neutral-900 mb-4">Share this article</p>
+      <div class="flex gap-3">
+        <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://vrinteriors.in${canonicalURL}`)}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center text-neutral-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" aria-label="Share on Twitter">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>
+        </a>
+        <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(`https://vrinteriors.in${canonicalURL}`)}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center text-neutral-600 hover:bg-primary-100 hover:text-primary-600 transition-colors" aria-label="Share on LinkedIn">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <a href={`https://wa.me/?text=${encodeURIComponent(`${post.title} - https://vrinteriors.in${canonicalURL}`)}`} target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-lg bg-neutral-100 flex items-center justify-center text-neutral-600 hover:bg-secondary-100 hover:text-secondary-600 transition-colors" aria-label="Share on WhatsApp">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.273-.272.198-.967.9-.967 1.64 0 .694.42 1.026.547 1.14.134.12.766.798 1.33 1.755.548.937 1.08 2.073 1.293 2.376.213.302.26.413.36.492a.56.56 0 00.523-.112c.57-.792.898-1.737.96-2.02.063-.272.194-.557.225-.778.027-.208.009-.355-.099-.508zM12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.161.689-.223.689-.493 0-.243-.012-1.093-.012-2.01-2.782.605-3.369-1.342-3.369-1.342-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .27.18.587.688.493A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Related Posts -->
+  <Section id="related-posts" background="muted" padding="lg">
+    <div class="section-header">
+      <h2 class="section-title">Read Next</h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {Object.entries(samplePosts).filter(([s]) => s !== slug).slice(0, 3).map(([s, p]) => (
+        <Card variant="image-top" padding="none" href={`/blog/${s}`} image={{ src: p.image, alt: p.title }} class="h-full">
+          <div class="p-6 flex flex-col flex-1">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="badge-primary">{p.category}</span>
+              <time class="text-sm text-neutral-500" datetime={p.date}>{new Date(p.date).toLocaleDateString('en-IN', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
+            </div>
+            <h3 class="text-lg font-semibold text-neutral-900 mb-2 line-clamp-2">{p.title}</h3>
+            <p class="text-sm text-neutral-500 flex items-center gap-1 mt-auto">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              {p.readTime} read
+            </p>
+          </div>
+        </Card>
+      ))}
+    </div>
+  </Section>
+
+  <!-- CTA -->
+  <Section id="article-cta" background="primary" padding="lg" narrow>
+    <div class="text-center text-white">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">Have a Project in Mind?</h2>
+      <p class="text-primary-100 mb-8 max-w-2xl mx-auto">From material selection to complete design & execution — our team is ready to help.</p>
+      <Button variant="secondary" href="/contact" class="w-full sm:w-auto text-lg px-8 py-4 border-white text-white hover:bg-white/10">Get a Free Quote</Button>
+    </div>
+  </Section>
+
+  <Footer slot="footer" />
+</Layout>
